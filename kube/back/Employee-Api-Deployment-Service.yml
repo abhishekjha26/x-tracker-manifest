@@ -4,6 +4,7 @@ metadata:
   name: employee-microservice
   labels:
     app: employee-restapp
+    version: v1
 spec:
   replicas: 1
   selector:
@@ -13,6 +14,7 @@ spec:
     metadata:
       labels: 
         app: employee-restapp
+        version: v1
     spec:
       # initContainers:
       #   - name: init-db

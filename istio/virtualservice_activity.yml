@@ -1,7 +1,7 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: auth-virtualservice
+  name: activity-virtualservice
 #  namespace: default
 spec:
   hosts:
@@ -11,9 +11,9 @@ spec:
   http:
   - match:
     - uri:
-        prefix: /auths/*
+        prefix: /activities/*
     route:
     - destination:
-        host: auth-restapp-nodeport-service.default.svc.cluster.local # specify service name        
+        host: activity-restapp-nodeport-service.default.svc.cluster.local # specify service name        
         port:
           number: 8080

@@ -7,7 +7,7 @@ spec:
   hosts:
   - "*"
   gateways: # using gateways field, it'll be exposed externally
-  - session-gateway
+  - xtracker-gateway
   http:
   - match:
     - uri:

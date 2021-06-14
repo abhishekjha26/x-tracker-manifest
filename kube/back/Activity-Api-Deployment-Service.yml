@@ -4,6 +4,7 @@ metadata:
   name: activity-microservice
   labels:
     app: activity-restapp
+    version: v1
 spec:
   replicas: 1
   selector:
@@ -13,6 +14,7 @@ spec:
     metadata:
       labels: 
         app: activity-restapp
+        version: v1
     spec:
       # initContainers:
       #   - name: init-db
