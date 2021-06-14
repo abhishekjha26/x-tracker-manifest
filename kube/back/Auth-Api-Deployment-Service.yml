@@ -23,7 +23,7 @@ spec:
       #     command: ['sh', '-c', 'echo -e "Checking for the availability of MySQL Server deployment"; while ! nc -z mysql 3306; do sleep 1; printf "-"; done; echo -e "  >> MySQL DB Server has started";']      
       containers:
         - name: auth
-          image: papeterinnova/auth-api:v1
+          image: papeterinnova/auth-api-dev:v1
           # command: [ "sleep" ]
           # args: [ "infinity" ]
           ports: 
