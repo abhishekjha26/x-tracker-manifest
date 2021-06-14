@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: auth-virtualservice
+#  namespace: default
+spec:
+  hosts:
+  - "*"
+  gateways: # using gateways field, it'll be exposed externally
+  - auth-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /auths/*
+    route:
+    - destination:
+        host: auth-restapp-nodeport-service.default.svc.cluster.local # specify service name        
+        port:
+          number: 8080

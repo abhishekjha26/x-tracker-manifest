@@ -1,0 +1,83 @@
+# Annotations Reference:  https://kubernetes-sigs.github.io/aws-alb-ingress-controller/guide/ingress/annotation/
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-xtracker-restapp-service
+#  namespace: istio-system
+  labels:
+    app: xtracker-restapp
+  annotations:
+    # Ingress Core Settings
+    kubernetes.io/ingress.class: "alb"
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    # Health Check Settings
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTP 
+    alb.ingress.kubernetes.io/healthcheck-port: traffic-port
+#Important Note:  Need to add health check path annotations in service level if we are planning to use multiple targets in a load balancer    
+#    alb.ingress.kubernetes.io/healthcheck-path: /activity/health-status
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: '15'
+    alb.ingress.kubernetes.io/healthcheck-timeout-seconds: '5'
+    alb.ingress.kubernetes.io/success-codes: '200'
+    alb.ingress.kubernetes.io/healthy-threshold-count: '2'
+    alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /sessions/*
+            pathType: Prefix
+            backend:
+              service:
+                name: session-restapp-nodeport-service
+                port:
+                  number: 8080
+          - path: /send/*
+            pathType: Prefix
+            backend:
+              service:
+                name: email-restapp-nodeport-service
+                port:
+                  number: 80
+          - path: /employes/*
+            pathType: Prefix
+            backend:
+              service:
+                name: employee-restapp-nodeport-service
+                port:
+                  number: 8080
+          - path: /managers/*
+            pathType: Prefix
+            backend:
+              service:
+                name: manager-restapp-nodeport-service
+                port:
+                  number: 8080
+          - path: /projects/*
+            pathType: Prefix
+            backend:
+              service:
+                name: project-restapp-nodeport-service
+                port:
+                  number: 8080
+          - path: /auths/*
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-restapp-nodeport-service
+                port:
+                  number: 8080
+          - path: /activities/*
+            pathType: Prefix
+            backend:
+              service:
+                name: activity-restapp-nodeport-service
+                port:
+                  number: 8080
+          - path: /*
+            pathType: Prefix
+            backend:
+              service:
+                name: x-tracker-front-nodeport-service
+                port:
+                  number: 4200
+# Important Note-1: In path based routing order is very important, if we are going to use  "/*", try to use it at the end of all rules.

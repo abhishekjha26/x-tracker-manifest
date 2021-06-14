@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: session-virtualservice
+  # namespace: default
+spec:
+  hosts:
+  - "*"
+  gateways: # using gateways field, it'll be exposed externally
+  - session-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /sessions/*
+    route:
+    - destination:
+        host: session-restapp-nodeport-service.default.svc.cluster.local # specify service name
+        port:
+          number: 8080

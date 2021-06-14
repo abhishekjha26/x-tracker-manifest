@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata:
+  name: activity-microservice
+  labels:
+    app: activity-restapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: activity-restapp
+  template:  
+    metadata:
+      labels: 
+        app: activity-restapp
+    spec:
+      # initContainers:
+      #   - name: init-db
+      #     image: busybox:1.31
+      #     command: ['sh', '-c', 'echo -e "Checking for the availability of MySQL Server deployment"; while ! nc -z mysql 3306; do sleep 1; printf "-"; done; echo -e "  >> MySQL DB Server has started";']      
+      containers:
+        - name: activity
+          image: papeterinnova/activity-api:v0.0.1-release
+          # command: [ "sleep" ]
+          # args: [ "infinity" ]
+          ports: 
+            - containerPort: 8080
+          livenessProbe:
+            # exec:
+            #   command: 
+            #     - /bin/sh
+            #     - -c 
+            #     - nc -z localhost 8080
+            httpGet:
+              path: /activities/test
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /activities/test
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 10

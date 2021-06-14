@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: email-virtualservice
+  # namespace: default
+spec:
+  hosts:
+  - email-restapp-nodeport-service
+  gateways: # using gateways field, it'll be exposed externally
+  - email-gateway
+  http:
+  - match:
+    - uri:
+        prefix: /send/*
+    route:
+    - destination:
+        host: email-restapp-nodeport-service.default.svc.cluster.local # specify service name
+        port:
+          number: 80
