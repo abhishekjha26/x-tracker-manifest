@@ -1,0 +1,111 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "X Tracker Email Sender",
+        "license": {
+            "name": "MIT"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "Message API server"
+        }
+    ],
+    "paths": {
+        "/send/email": {
+            "post": {
+                "summary": "Mail sending",
+                "operationId": "sendEmail",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "to": {
+                                        "description": "The receiver mail address",
+                                        "type": "string"
+                                    },
+                                    "subject": {
+                                        "description": "The subject of the mail",
+                                        "type": "string"
+                                    },
+                                    "cotent": {
+                                        "description": "The content of the mail",
+                                        "type": "string"
+                                    },
+                                    "altContent": {
+                                        "description": "Alternatif content of the mail",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "to": "example@example.com",
+                                    "subject": "Mailing",
+                                    "content": "Content",
+                                    "altContent": "Alternatif content"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Mail sent"
+                    },
+                    "400": {
+                        "description": "messing data"
+                    },
+                    "500": {
+                        "description": "Unexpected error"
+                    },
+                    "default": {
+                        "description": "Unexpected error"
+                    }
+                }
+            }
+        },
+        "/send/sms": {
+            "post": {
+                "summary": "Sms sender",
+                "operationId": "SendSms",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "to": {
+                                        "description": "The receiver phone number",
+                                        "type": "string"
+                                    },
+                                    "cotent": {
+                                        "description": "The content of the message",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "to": "+15017122661",
+                                    "content": "Content"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "messing data"
+                    },
+                    "500": {
+                        "description": "Unexpected error"
+                    },
+                    "default": {
+                        "description": "Unexpected error"
+                    }
+                }
+            }
+        }
+    }
+}
